@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: calculator_db
+      MYSQL_USER: calculator_user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3307:3306"  
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  calculator:
+    build: .
+    environment:
+      - DB_HOST=mariadb
+      - DB_USER=calculator_user
+      - DB_PASS=userpassword
+      - DB_NAME=calculator_db
+      - DISPLAY=${DISPLAY:-host.docker.internal:0.0}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    depends_on:
+      - mariadb
+    privileged: true  
+
+volumes:
+  mariadb_data:

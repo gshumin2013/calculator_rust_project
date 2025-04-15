@@ -1,0 +1,9 @@
+[package]
+name = "calculator_rust_project"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mysql = "24.0.0"
+gtk = { version = "0.7", package = "gtk4" } 
+libadwaita = { version = "0.5", package = "libadwaita" }
