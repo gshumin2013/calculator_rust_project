@@ -5,13 +5,6 @@ use mysql::prelude::*;
 use mysql::*;
 use std::error::Error;
 
-struct Calculation {
-    num1: f64,
-    num2: f64,
-    operation: String,
-    result: f64,
-}
-
 fn main() -> Result<(), Box<dyn Error>> {
     // Инициализация приложения GTK
     let app = Application::builder()
@@ -173,19 +166,4 @@ fn show_history() -> Result<(), Box<dyn Error>> {
     }
 
     Ok(())
-}
-
-fn get_db_connection() -> Result<PooledConn, Box<dyn Error>> {
-    let db_host = "mariadb"; 
-    let db_port = 3306;      
-    
-    let opts = OptsBuilder::new()
-        .ip_or_hostname(Some(db_host))
-        .tcp_port(db_port)
-        .user(Some("calculator_user"))
-        .pass(Some("userpassword"))
-        .db_name(Some("calculator_db"));
-
-    let pool = Pool::new(opts)?;
-    pool.get_conn().map_err(|e| e.into())
 }
